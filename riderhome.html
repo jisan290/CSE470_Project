@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Home Page</title>
+    <link rel="stylesheet" href="riderhome.css">
+    <script defer src="riderhome.js"></script>
+
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+  
+    <nav class="navbar">
+        <div class="logo">Park & GO</div>
+        <ul class="nav-links">
+            <li><a href="#profile-management">Profile Management</a></li>
+            <li><a href="#search">Search Parking</a></li>
+            <li><a href="#list-parking">List Parking</a></li>
+            <li><a href="#reservation">Reservations</a></li>
+            <li><a href="#ratings">Ratings & Reviews</a></li>
+        </ul>
+    </nav>
+
+ 
+    <section id="profile-management" class="section">
+        <h2>Profile Management</h2>
+        <div class="profile-info">
+      
+            <div class="profile-pic">
+                <img src="https://via.placeholder.com/150" alt="Profile Picture" />
+            </div>
+            <div class="profile-details">
+                <p><strong>Rider ID:</strong> 1237645</p>
+                <p><strong>Name:</strong> Salman Khan</p>
+            </div>
+        </div>
+        <p>Manage your profile details, update contact information, and add or edit payment methods.</p>
+        <button onclick="manageProfile()">Manage Profile</button>
+    </section>
+
+
+    <section id="search" class="section">
+        <h2>Search Parking Spaces</h2>
+        <p>Find parking spaces based on location, time, price, and type.</p>
+        <input type="text" placeholder="Search location..." id="location-search">
+        <button onclick="searchParking()">Search</button>
+        <div id="map" class="map" style="height: 500px; width: 100%;">Interactive map will be here</div>
+    </section>
+
+   
+    <section id="list-parking" class="section">
+        <h2>List Your Parking Space</h2>
+        <p>Homeowners can list parking spaces with details such as availability, pricing, and photos.</p>
+        <button onclick="listParking()">List Parking Space</button>
+    </section>
+
+  
+    <section id="reservation" class="section">
+        <h2>Reservation System</h2>
+        <p>Book parking spaces in advance for specific durations.</p>
+        <button onclick="viewReservations()">View Reservations</button>
+    </section>
+
+    <section id="ratings" class="section">
+        <h2>Ratings & Reviews</h2>
+        <p>Rate and review your parking experiences.</p>
+        <button onclick="leaveReview()">Leave a Review</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 ParkingEase. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function initMap() {
+            const center = { lat: 23.8103, lng: 90.4125 };  
+            
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: center
+            });
+
+            new google.maps.Marker({
+                position: center,
+                map: map
+            });
+        }
+
+        
+        function manageProfile() {
+            alert("Navigate to the Profile Management page.");
+        }
+
+   
+        function searchParking() {
+            const location = document.getElementById("location-search").value;
+            if (location) {
+                alert(`Searching parking spaces near: ${location}`);
+               
+            } else {
+                alert("Please enter a location to search.");
+            }
+        }
+
+
+        function listParking() {
+            alert("Navigate to the List Parking Space page.");
+        }
+
+        function viewReservations() {
+            alert("Navigate to the Reservations page.");
+        }
+
+        function leaveReview() {
+            alert("Navigate to the Ratings and Reviews page.");
+        }
+    </script>
+</body>
+</html>
