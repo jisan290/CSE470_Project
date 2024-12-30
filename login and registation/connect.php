@@ -6,7 +6,7 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $db = "login";
-$conn = new mysqli('localhost' , 'root' , '' , 'agrovillage' );
+$conn = new mysqli('localhost' , 'root' , '' , 'park_n_go' );
 
 if($conn->connect_error){
     echo "failed to connect DB".$conn->connect_error;

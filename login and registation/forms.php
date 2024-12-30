@@ -3,7 +3,7 @@
 
 include 'connect.php';
 
-if(isset($_POST['seller'])){
+if(isset($_POST['customer'])){
     $id = unique_id();
     $firstName = $_POST['fname'];
     $lastName = $_POST['lname'];
@@ -27,17 +27,17 @@ if(isset($_POST['seller'])){
     #-----
 
 
-     $checkEmail = "SELECT * From supplier where gmail = '$gmail'";
+     $checkEmail = "SELECT * From users where gmail = '$gmail'";
      $result = $conn->query($checkEmail);
      if($result->num_rows>0){
         echo "email already exits";
      }
      else {
-        $insertQuery = "INSERT INTO supplier(first_name , last_name , gmail , password ,city , road , house, nid  , unique_id , image)
+        $insertQuery = "INSERT INTO users(first_name , last_name , gmail , password ,city , road , house, nid  , unique_id , image)
         VALUES('$firstName' , '$lastName' , '$gmail' , '$pass' ,'$city','$road','$house', '$nid' , '$id' , '$image')";
 
 
-        $insertQuery2 = "INSERT INTO supplier_phone(supplier_id , phone)
+        $insertQuery2 = "INSERT INTO users_phones(supplier_id , phone)
         VALUES('$id' , '$phone')";
         $conn->query($insertQuery2);
         if($conn->query($insertQuery)==TRUE){
@@ -50,7 +50,7 @@ if(isset($_POST['seller'])){
 
      }
 
-}elseif(isset($_POST['customer'])){
+}elseif(isset($_POST['owner'])){
     $uniqueID = unique_id();
     $cartID = unique_id();
     $name = $_POST['name'];
@@ -67,19 +67,19 @@ if(isset($_POST['seller'])){
     $house = $parts[2];
      
 
-     $checkEmail = "SELECT * From customer where gmail = '$gmail'";
+     $checkEmail = "SELECT * From  owner where gmail = '$gmail'";
      $result = $conn->query($checkEmail);
      if($result->num_rows>0){
        echo "email already exits";
      }
      else {
-        $insertQuery = "INSERT INTO customer(name , gmail , password , city , road , house, unique_id)
+        $insertQuery = "INSERT INTO owner(name , gmail , password , city , road , house, unique_id)
         VALUES('$name', '$gmail' , '$pass' , '$city','$road' , '$house', '$uniqueID')";
-        $cart_insert = "INSERT INTO cart(customer_id, cart_id)
-        VALUES('$uniqueID' , '$cartID')";
-        $c_phone = "INSERT INTO customer_phone(customer_id , phones)VALUES('$uniqueID' , '$phone')";
+        // $cart_insert = "INSERT INTO cart(customer_id, cart_id)
+        // VALUES('$uniqueID' , '$cartID')";
+        $c_phone = "INSERT INTO owners_phones(customer_id , phones)VALUES('$uniqueID' , '$phone')";
         $conn->query($c_phone);
-        $conn->query($cart_insert);
+        // $conn->query($cart_insert);
         if($conn->query($insertQuery)== TRUE){
             header("location: login.html");
         }else {
