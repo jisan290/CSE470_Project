@@ -12,17 +12,17 @@
       
       <!-- Updated search form -->
       <div id="search-box">
-        <form id="search-form" action="search.php" method="GET">
-          <input type="text" id="search-bar" name="q" placeholder="Search..." required />
-          <button type="submit" id="search-btn">
+        <form id="search-form" action="home.php" method="POST">
+        <input type="text" id="search-bar" name="q" placeholder="Search..." required />
+        <button type="submit" id="search-btn">
             <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+        </button>
         </form>
       </div>
       
       <ul class="nav-links">
         <li><a href="./home.php">Home</a></li>
-        <li><a href="./availablebooks.php">Available parking spots</a></li>
+        <li><a href="./availablebooks.php">My reservations</a></li>
         <li><a href="./registerbook.php">Add a space</a></li>
         <li><a href="./requests.php">Requests</a></li>
         <li><a href="./profile.php">My profile</a></li>

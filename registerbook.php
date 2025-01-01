@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $longitude = $_POST['longitude'];
     $available = $_POST['available'];
     $description = $_POST['description']; // Get the description
+    $price = $_POST['price']; // Get the price
+    $paymentMethod = $_POST['payment_method']; // Get the payment method
+    $paymentDetails = $_POST['payment_details']; // Get the payment details
 
     // Get the logged-in user's ID from the session
     $userID = $_SESSION['user_id'];
@@ -32,17 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $row_count = $row['row_count'];
     $row_count = $row_count + 1;
     $spotID = $row_count;
-    // Insert the parking spot into the spots table (including description)
-    $spotQuery = $conn->prepare("INSERT INTO spots (name, latitude, longitude, available) VALUES (?, ?, ?, ? )");
-    $spotQuery->bind_param("ssdi", $spotName, $latitude, $longitude, $available);
+    // Insert the parking spot into the spots table (including description and price)
+    $spotQuery = $conn->prepare("INSERT INTO spots (name, latitude, longitude, available, price, payment_method, payment_details) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $spotQuery->bind_param("ssdisss", $spotName, $latitude, $longitude, $available, $price, $paymentMethod, $paymentDetails);
 
     if ($spotQuery->execute()) {
         // Get the spot_id of the newly added spot
         $spotID = $conn->insert_id;
 
         // Now insert this registration into the registrationparkingspots table
-        $registrationQuery = $conn->prepare("INSERT INTO registrationparkingspots (spot_id, user_id , name ,description, available , latitude , longitude )VALUES (?, ? , ? , ? , ? , ? , ?)");
-        $registrationQuery->bind_param("iissisd", $spotID , $userID ,   $spotName ,$description , $available , $latitude, $longitude);
+        $registrationQuery = $conn->prepare("INSERT INTO registrationparkingspots (spot_id, user_id , name ,description, available , latitude , longitude, price , payment_method , payment_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $registrationQuery->bind_param("iissisdsss", $spotID, $userID, $spotName, $description, $available, $latitude, $longitude, $price, $paymentMethod, $paymentDetails);
 
         if ($registrationQuery->execute()) {
             // Redirect to the profile page after successfully registering the parking spot
@@ -74,14 +77,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="./css/signin.css">
     <title>Register Parking Spot</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body {
             background-image: url("./images/site.png");
             background-size: cover;
             background-color: black;
             color: white;
             background-repeat: no-repeat;
-            height: 100vh;
             background-attachment: fixed;
+        }
+
+        /* Navbar Styles */
+        header {
+            margin-bottom: 0; /* Remove extra space below navbar */
         }
 
         .container {
@@ -90,14 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 20px;
             align-items: flex-start;
             gap: 20px;
+            margin-top: 0;
         }
 
+        /* Form container styling */
         .form-container {
             width: 48%;
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 10px;
         }
 
         .form-container h1 {
@@ -111,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-container input,
-        .form-container textarea {
+        .form-container textarea,
+        .form-container select {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -120,10 +137,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 16px;
             background-color: #f9f9f9;
         }
-        .form-container input{
+
+        .form-container input {
             color: black;
         }
-        .textbox{
+
+        .textbox {
             color: black;
         }
 
@@ -149,9 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-align: center;
         }
 
+        /* Map container styling */
         .map-container {
             width: 48%;
-            height: 400px;
+            height: 300px; /* Adjust height to fit the page better */
             position: relative;
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
@@ -188,6 +208,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <label for="available">Availability (1 for available, 0 for not available):</label>
                 <input class="textbox" type="number" name="available" min="0" max="1" required><br>
+
+                <label for="price">Price (per hour):</label>
+                <input class="textbox" type="number" name="price" min="0" required><br>
+
+                <label for="payment_method">Payment Method:</label>
+                <select name="payment_method" class="textbox" required>
+                    <option value="bkash">bKash</option>
+                    <option value="nagad">Nagad</option>
+                    <option value="rocket">Rocket</option>
+                    <option value="bank">Bank Transfer</option>
+                </select><br>
+
+                <label for="payment_details">Payment Details:</label>
+                <input class="textbox" type="text" name="payment_details" required><br>
 
                 <input type="hidden" name="latitude" id="latitude">
                 <input type="hidden" name="longitude" id="longitude">
