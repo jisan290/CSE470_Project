@@ -1,4 +1,6 @@
 <?php
+
+
 include 'fetchuserinfo.php';
 include("./header.php");
 
@@ -14,6 +16,12 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $spot_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+
+    // Prepare the statement
+$stmtQ = $conn->prepare("INSERT INTO reservation (user_id, spot_id) VALUES (?, ?)");
+$stmtQ->bind_param("ii", $userID, $spot_id);
+$stmtQ->execute();
 
 if ($result->num_rows === 0) {
     die("No parking spot found with the provided ID.");
@@ -173,4 +181,6 @@ $spot = $result->fetch_assoc();
 </body>
 </html>
 
-<?php include("./footer.php"); ?>
+<?php include("./footer.php"); ?> 
+
+<!-- 1 -->

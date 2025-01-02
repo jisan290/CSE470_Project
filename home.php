@@ -1,4 +1,5 @@
 <?php
+
 include("./header.php");
 include 'fetchuserinfo.php';
 
@@ -190,3 +191,5 @@ $searchQuery = isset($_POST['q']) ? $_POST['q'] : '';  // Get the search query
 $spotsQuery->close();
 $conn->close();
 ?>
+
+<!-- 1 -->
