@@ -53,6 +53,7 @@ $reservedParkingResult = $reservedParkingQuery->get_result();
             background: #fff;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
+            align-self: center;
         }
 
         .section-title {

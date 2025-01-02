@@ -22,10 +22,14 @@
       
       <ul class="nav-links">
         <li><a href="./home.php">Home</a></li>
-        <li><a href="./availablebooks.php">My reservations</a></li>
+        <li><a href="./my_reservations.php">My reservations</a></li>
+        <li><a href = "./regulations.php">Rules & Regulations</a></li>
         <li><a href="./registerbook.php">Add a space</a></li>
         <li><a href="./requests.php">Requests</a></li>
+        <li><a href="./complains.php">make complain</a></li>
         <li><a href="./profile.php">My profile</a></li>
+        
+        
       </ul>
     </nav>
 

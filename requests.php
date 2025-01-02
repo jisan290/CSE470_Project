@@ -18,13 +18,16 @@ $spotsResult = $spotsQuery->get_result();
 
 // If no spots are found for this user
 if ($spotsResult->num_rows === 0) {
-    echo "No parking spots found for your user ID.";
-    exit;
+    echo "<div class='no-spot-message'>";
+    echo "<h3>No Parking Spots Registered</h3>";
+    echo "<p>It looks like you haven't registered any parking spots yet. Please feel free to create one and start offering parking to others.</p>";
+    echo "<a href='registerbook.php' class='create-spot-button'>Create a Parking Spot</a>";
+    echo "</div>";
+    
 }
 
 // Initialize total request counter
 $totalRequests = 0;
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,6 +172,74 @@ $totalRequests = 0;
             margin: 10px 0;
             color: #555;
         }
+
+        .no-spot-message {
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        .no-spot-message h3 {
+            font-size: 2em;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .no-spot-message p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .create-spot-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #2980b9;
+            color: white;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .create-spot-button:hover {
+            background-color: #3498db;
+            transform: scale(1.05);
+        }
+
+        .create-spot-button:focus {
+            outline: none;
+        }
+
+        /* Responsive design for smaller screens */
+        @media screen and (max-width: 600px) {
+            .no-spot-message {
+                padding: 30px 20px;
+            }
+
+            .no-spot-message h3 {
+                font-size: 1.8em;
+            }
+
+            .no-spot-message p {
+                font-size: 1.1em;
+            }
+
+            .create-spot-button {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -244,13 +315,17 @@ $totalRequests = 0;
 
         echo "</div>";
     }
+    if ($spotsResult->num_rows > 0) {
+        $spotsQuery->close();
+        $requestsQuery->close();
+        $conn->close();
 
-    $spotsQuery->close();
-    $requestsQuery->close();
-    $conn->close();
+    }
+
+    
     ?>
 
-    <a href="dashboard.php" class="back-button">Back to Dashboard</a>
+    <a href="home.php" class="back-button">Back to Dashboard</a>
 </div>
 
 </body>
