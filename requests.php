@@ -1,4 +1,5 @@
 <?php
+include("./header.php");
 include 'fetchuserinfo.php'; // Ensure user authentication and connection setup
 
 // Retrieve the logged-in user’s ID from the session

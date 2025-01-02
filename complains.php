@@ -1,4 +1,5 @@
 <?php
+
 include 'fetchuserinfo.php'; // Database connection
 
 // Handle form submission
@@ -62,6 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #ddd;
             font-size: 1rem;
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            
+            background-color:rgb(85, 85, 171);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
         button {
             background-color: #3498db;
             color: white;
@@ -74,6 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<div style="position: absolute; top: 10px; left: 10px;">
+    <button class="back-button" onclick="window.history.back();">← Go Back</button>
+</div>
 <div class="container">
     <h1>Submit a Complaint</h1>
     <form method="POST">
